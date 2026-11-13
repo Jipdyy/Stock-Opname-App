@@ -2,20 +2,23 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Spatie\Permission\Traits\HasRoles;
 use Database\Factories\UserFactory;
-use Illuminate\Database\Eloquent\Attributes\Fillable;
-use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
 
-#[Fillable(['name', 'email', 'password'])]
-#[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable,  HasRoles;
+
+    public const SUPER_ADMIN_ROLE = 'Super Admin';
+
+    protected $fillable = ['name', 'email', 'password'];
+    protected $hidden = ['password', 'remember_token'];
 
     /**
      * Get the attributes that should be cast.
@@ -25,8 +28,26 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function stockOpnameAssignments(): HasMany {
+        return $this->hasMany(StockOpnameAssignment::class);
+    }
+
+    public function stockOpnames(): HasMany {
+        return $this->hasMany(StockOpname::class);
+    }
+
+    public function createdBy(): HasMany {
+        return $this->hasMany(StockOpname::class, 'created_by', 'id');
+    }
+    public function approvedBy(): HasMany {
+        return $this->hasMany(StockOpname::class, 'approved_by', 'id');
+    }
+
+    public function checkedBy(): HasMany {
+        return $this->hasMany(StockOpnameItem::class, 'checked_by', 'id');
     }
 }
