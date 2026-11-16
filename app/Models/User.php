@@ -3,10 +3,8 @@
 namespace App\Models;
 
 use Spatie\Permission\Traits\HasRoles;
-use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
 
@@ -17,7 +15,7 @@ class User extends Authenticatable
 
     public const SUPER_ADMIN_ROLE = 'Super Admin';
 
-    protected $fillable = ['name', 'email', 'password'];
+    protected $fillable = ['name', 'email', 'password', 'role'];
     protected $hidden = ['password', 'remember_token'];
 
     /**
@@ -49,5 +47,20 @@ class User extends Authenticatable
 
     public function checkedBy(): HasMany {
         return $this->hasMany(StockOpnameItem::class, 'checked_by', 'id');
+    }
+
+    public function hasRole(string $role): Bool {
+        return $this->role === $role;
+    }
+
+    public function isAdmin(): Bool {
+        return $this->role === 'admin';
+    }
+
+    public function isStaff(): Bool {
+        return $this->role === 'staff';
+    }
+    public function isHeadMaster(): Bool {
+        return $this->role === 'headmaster';
     }
 }
