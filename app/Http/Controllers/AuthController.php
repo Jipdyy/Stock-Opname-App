@@ -12,7 +12,6 @@ class AuthController extends Controller
 {
     public function showLoginForm(): View {
         return view('auth.login');
-
     }
     public function login(Request $request) {
         $credentials = $request->validate([

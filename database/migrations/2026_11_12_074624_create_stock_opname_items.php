@@ -23,7 +23,7 @@ return new class extends Migration
             $table->foreignId('item_id')
                   ->constrained('items')
                   ->onDelete('restrict');
-            $table->foreign('location_id')
+            $table->foreignId('location_id')
                   ->constrained('locations')
                   ->onDelete('restrict');
             $table->unsignedInteger('qty_system');

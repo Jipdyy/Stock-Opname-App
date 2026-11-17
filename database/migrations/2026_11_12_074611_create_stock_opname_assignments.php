@@ -16,10 +16,10 @@ return new class extends Migration
             $table->foreignId('stock_opname_id')
                   ->constrained('stock_opnames')
                   ->onDelete('restrict');
-            $table->foreign('location_id')
+            $table->foreignId('location_id')
                   ->constrained('locations')
                   ->onDelete('restrict');
-            $table->foreign('user_id')
+            $table->foreignId('user_id')
                   ->constrained('users')
                   ->onDelete('restrict');
             $table->timestamps();
