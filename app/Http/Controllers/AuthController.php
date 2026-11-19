@@ -34,7 +34,7 @@ class AuthController extends Controller
                     ->with('success', 'Selamat datang kembali, Admin');
             }
 
-            if ($user->role === 'admin') {
+            if ($user->role === 'headmaster') {
                 return redirect()->intended('/admin/reports')
                     ->with('success', 'Selamat datang kembali, Admin');
             }

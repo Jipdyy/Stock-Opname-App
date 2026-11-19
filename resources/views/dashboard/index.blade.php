@@ -3,127 +3,103 @@
 @section('title', 'Dashboard - Stock Opname Inventaris')
 
 @section('content')
-<div class="container-fluid px-4">
-    
-    <!-- 1. Bagian Header / Sambutan -->
-    <div class="row mb-4">
-        <div class="col-12">
-            <div class="p-4 bg-white rounded-4 shadow-sm border-0">
-                <h3 class="fw-bold text-dark">Dashboard Utama</h3>
-                <p class="text-muted mb-0">
-                    Halo, <strong>{{ auth()->user()->name }}</strong>! Anda masuk sebagai 
-                    <span class="badge bg-secondary text-uppercase">{{ auth()->user()->role }}</span>. 
-                    Berikut adalah ringkasan sistem inventaris sekolah saat ini.
-                </p>
-            </div>
+<div class="space-y-4 space-x-1">
+    <div>
+        <h1 class="text-xl font-semibold text-blue-600">Dashboard</h1>
+    </div>
+
+    <div class="grid gap-3 sm:grid-cols-4">
+        <div class="rounded-lg border border-grey-400 bg-white p-4">
+            <p class="text-xs text-gray-500 dark:text-gray-400">Total aset terdaftar</p>
+            <p class="mt-1 text-2xl font-bold text-blue-800">
+                2221 unit
+            </p>
+        </div>
+
+        <div class="rounded-lg border border-grey-400 bg-white p-4">
+            <p class="text-xs text-gray-500 dark:text-gray-400">Barang sesuai</p>
+            <p class="mt-1 text-2xl font-bold text-green-500">
+                222 unit
+            </p>
+        </div>
+
+        <div class="rounded-lg border border-grey-400 bg-white p-4">
+            <p class="text-xs text-gray-500 dark:text-gray-400">Barang rusak</p>
+            <p class="mt-1 text-2xl font-bold text-blue-700">
+                222 unit
+            </p>
+        </div>
+
+        <div class="rounded-lg border border-grey-400 bg-white p-4">
+            <p class="text-xs text-gray-500 dark:text-gray-400">Barang hilang</p>
+            <p class="mt-1 text-2xl font-bold text-red-500">
+                222 unit
+            </p>
         </div>
     </div>
 
-    <!-- 2. Bagian Kartu Statistik / Ringkasan (Cards Summary) -->
-    <div class="row g-4 mb-4">
-        <!-- Kotak 1: Total Aset Tetap -->
-        <div class="col-xl-3 col-md-6">
-            <div class="card border-0 shadow-sm rounded-4 bg-primary text-white h-100">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <h6 class="text-white-50 text-uppercase small fw-bold">Total Aset Tetap</h6>
-                            <h2 class="fw-bold mb-0">1,245</h2>
-                        </div>
-                        <div class="fs-1 text-white-50">
-                            <i class="bi bi-box-seam"></i> <!-- Bisa diisiikon Bootstrap Icons -->
-                        </div>
-                    </div>
+    <div class="grid gap-3 sm:grid-cols-2 mt-8">
+        <div class="lg:col-span-8 bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+            <div class="p-6 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                    <h2 class="text-lg font-bold text-slate-800">
+                        Progres Opname per Ruangan
+                    </h2>
+                    <p class="tet-xs text-slate-500 mt-0.5"> Update dari verifikasi petugas lapangan</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <label for="" class="text-xs font-meidum text-slate-500">Filter Unit:</label>
+                    <select id="filter-lokasi" class="text-xs font-medium text-slate-700 bg-white border border-slate-200 rounded-lg pl-2 pr-7 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        <option>Semua Lokasi</option>
+                    </select>
                 </div>
             </div>
-        </div>
+            <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="border-b border-slate-100 text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+                        <th class="py-3.5 px-5">Ruangan / Unit Sarpras</th>
+                        <th class="py-3.5 px-4">Petugas Lapangan</th>
+                        <th class="py-3.5 px-4 text-center">Realisasi Target</th>
+                        <th class="py-3.5 px-4">Progres</th>
+                        <th class="py-3.5 px-5 text-center">Status Audit</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 text-sm">
+                    <tr class="hover:bg-slate-50/70 transition-colors">
+                        <td class="py-4 px-5">
+                            <div class="flex items-start gap-3">
+                                <div class="w-9 h-9 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0 mt-0.5">
+                                    
+                                </div>
+                                <div>
+                                    <div class="font-semibold text-slate-800 leading-snug">Lab Komputer B</div>
+                                    <div class="text-xs text-slate-400 mt-0.5">Gedung B, Lantai 2</div>
+                                </div>
+                            </div>
+                        </td>
 
-        <!-- Kotak 2: Total Ruangan / Lokasi -->
-        <div class="col-xl-3 col-md-6">
-            <div class="card border-0 shadow-sm rounded-4 bg-success text-white h-100">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <h6 class="text-white-50 text-uppercase small fw-bold">Total Ruangan</h6>
-                            <h2 class="fw-bold mb-0">28</h2>
-                        </div>
-                        <div class="fs-1 text-white-50">
-                            <i class="bi bi-building"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+                        <td class="py-4 px-4">
+                            <div class="font-medium text-slate-700 leading-snug">Ahmad Fauzi, S.Kom</div>
+                            <div class="text-xs text-slate-400 mt-0.5">Petugas TI</div>
+                        </td>
 
-        <!-- Kotak 3: Sesi Opname Aktif -->
-        <div class="col-xl-3 col-md-6">
-            <div class="card border-0 shadow-sm rounded-4 bg-warning text-dark h-100">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <h6 class="text-uppercase small fw-bold text-black-50">Sesi Opname Berjalan</h6>
-                            <h2 class="fw-bold mb-0">1</h2>
-                        </div>
-                        <div class="fs-1 text-black-50">
-                            <i class="bi bi-clipboard-check"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+                        <td class="py-4 px-4 text-center">
+                            <div class="font-bold text-slate-800">45 <span class="text-slate-400 font-normal">/</span> 45</div>
+                            <div class="text-xs text-slate-400 mt-0.5">Laptop Client</div>
+                        </td>
 
-        <!-- Kotak 4: Aset Bermasalah / Rusak -->
-        <div class="col-xl-3 col-md-6">
-            <div class="card border-0 shadow-sm rounded-4 bg-danger text-white h-100">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <h6 class="text-white-50 text-uppercase small fw-bold">Aset Rusak / Hilang</h6>
-                            <h2 class="fw-bold mb-0">12</h2>
-                        </div>
-                        <div class="fs-1 text-white-50">
-                            <i class="bi bi-exclamation-triangle"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                        <td class="py-4 px-5 text-center whitespace-nowrap">
+                            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-600">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                Selesai
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
         </div>
     </div>
-
-    <!-- 3. Bagian Tabel Aktivitas / Sesi Opname Terbaru -->
-    <div class="row">
-        <div class="col-12">
-            <div class="card border-0 shadow-sm rounded-4">
-                <div class="card-header bg-white py-3 border-0">
-                    <h5 class="fw-bold mb-0 text-dark">Status Sesi Stock Opname Terbaru</h5>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table class="table table-hover align-middle">
-                            <thead class="table-light">
-                                <tr>
-                                    <th>Judul Sesi</th>
-                                    <th>Periode</th>
-                                    <th>Status</th>
-                                    <th>Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Opname Semester Ganjil 2026/2027</td>
-                                    <td>Desember 2026</td>
-                                    <td><span class="badge bg-warning text-dark">Berjalan</span></td>
-                                    <td>
-                                        <a href="#" class="btn btn-sm btn-outline-primary">Detail</a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
 </div>
 @endsection
