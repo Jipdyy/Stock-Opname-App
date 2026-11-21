@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\LocationController;
 
 Route::redirect('/', '/login');
 
@@ -17,6 +18,7 @@ Route::get('/admin/dashboard', function () {
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('categories', CategoryController::class);
+    Route::resource('locations', LocationController::class);
 });
 
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout');

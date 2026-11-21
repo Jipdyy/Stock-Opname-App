@@ -36,6 +36,8 @@ class CategoryController extends Controller
             'type' => ['required', Rule::in(['aset_tetap', 'habis_pakai'])],
         ]);
 
+        Category::create($validated);
+
         return redirect()->route('categories.index')->with('success', "Kategori berhasil ditambahkan.");
     }
 
