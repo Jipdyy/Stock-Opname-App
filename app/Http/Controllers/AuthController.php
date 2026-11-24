@@ -13,9 +13,10 @@ class AuthController extends Controller
     public function showLoginForm(): View {
         return view('auth.login');
     }
+
     public function login(Request $request) {
         $credentials = $request->validate([
-            'email' => ['required', 'string', 'email', 'unique:users, email'],
+            'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string'],
         ]);
 
@@ -23,7 +24,7 @@ class AuthController extends Controller
             $request->session()->regenerate();
 
             $user = Auth::user();
-
+            
             if ($user->role === 'admin') {
                 return redirect()->intended('/admin/dashboard')
                     ->with('success', 'Selamat datang kembali, Admin');
@@ -49,8 +50,10 @@ class AuthController extends Controller
 
     public function logout(Request $request): RedirectResponse {
         Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerate();
+
+        //opsional
+        // $request->session()->invalidate();
+        // $request->session()->regenerate();
 
         return redirect()->route('login');
     }

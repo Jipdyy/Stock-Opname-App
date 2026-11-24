@@ -11,10 +11,17 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::latest()->paginate(10);
-        
+        $categories = Category::query()
+            ->when($request->search, function ($query, $search) {
+                $query->where('name', 'like', "%{$search}%")
+                      ->orWhere('type', 'like', "%{$search}%");
+            })
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
+
         return view('categories.index', compact('categories'));
     }
 
@@ -30,23 +37,30 @@ class CategoryController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255', 'uniqe:category,name'],
+    {   
+        $validated= $request->validate([
+            'name' => ['required', 'string', 'max:255', 'unique:categories,name'],
             'type' => ['required', Rule::in(['aset_tetap', 'habis_pakai'])],
+        ], [
+            'name.required' => 'Nama kategori wajib diisi',
+            'name.string' => 'Nama kategori wajib berupa huruf/kata',
+            'name.max' => 'Nama kategori maksimal 255 karakter',
+            'name.unique' => 'Nama kategori sudah terdaftar',
+            'type.required' => 'Tipe kategori wajib diisi',
+            'type.in' => 'Tipe kategori tidak valid. Pilih antara Aset Tetap atau Barang Habis Pakai',
         ]);
 
-        Category::create($validated);
-
+        Category::firstOrCreate($validated);
+        
         return redirect()->route('categories.index')->with('success', "Kategori berhasil ditambahkan.");
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request)
     {
-        
+    
     }
 
     /**
